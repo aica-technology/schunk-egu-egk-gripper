@@ -56,7 +56,7 @@ def generate_launch_description():
             Node(
                 package="schunk_gripper_driver",
                 namespace="schunk",
-                executable="driver.py",
+                executable="driver",
                 name="driver",
                 parameters=[
                     {"host": LaunchConfiguration("host")},

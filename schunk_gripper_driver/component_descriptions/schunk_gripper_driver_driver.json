@@ -1,0 +1,73 @@
+{
+  "$schema": "https://docs.aica.tech/schemas/1-1-0/component.schema.json",
+  "name": "Schunk Gripper Driver",
+  "description": {
+    "brief": "ROS2 driver for SCHUNK`s EGU, EGK, and EZU mechatronic grippers"
+  },
+  "registration": "schunk_gripper_driver::Driver",
+  "inherits": "modulo_components::LifecycleComponent",
+  "parameters": [
+    {
+      "display_name": "Host IP",
+      "description": "The gripper's TCP/IP host address",
+      "parameter_name": "host",
+      "parameter_type": "string",
+      "default_value": null,
+      "optional": true
+    },
+    {
+      "display_name": "Host port",
+      "description": "The gripper's TCP/IP port",
+      "parameter_name": "port",
+      "parameter_type": "int",
+      "default_value": null,
+      "optional": true
+    },
+    {
+      "display_name": "Serial port",
+      "description": "The gripper's serial port",
+      "parameter_name": "serial_port",
+      "parameter_type": "string",
+      "default_value": null,
+      "optional": true
+    },
+    {
+      "display_name": "Device ID",
+      "description": "The gripper's Modbus device id",
+      "parameter_name": "device_id",
+      "parameter_type": "int",
+      "default_value": null,
+      "optional": true
+    }
+  ],
+  "services": [
+    {
+        "display_name": "Acknowledge",
+        "description": "Acknowledge the gripper status",
+        "service_name": "acknowledge"
+    },
+    {
+        "display_name": "Fast stop",
+        "description": "Immediately stop the gripper",
+        "service_name": "fast_stop"
+    },
+    {
+        "display_name": "Move to absolute position",
+        "description": "Move the gripper to an absolute position",
+        "service_name": "move_to_absolute_position",
+        "payload_format": "test"
+    },
+    {
+        "display_name": "Grip",
+        "description": "Grip an object",
+        "service_name": "grip",
+        "payload_format": "test"
+    },
+    {
+        "display_name": "Release",
+        "description": "Release the gripped object",
+        "service_name": "release",
+        "payload_format": "test"
+    }
+  ]
+}
