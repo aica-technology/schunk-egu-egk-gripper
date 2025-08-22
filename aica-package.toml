@@ -1,0 +1,34 @@
+#syntax=ghcr.io/aica-technology/package-builder:v1.4.4
+
+[signing]
+signer = "v2.0.2"
+enabled = false
+
+[metadata]
+version = "0.1.0"
+description = """
+Driver for EGU, EGK, and EZU mechatronic grippers from SCHUNK. The driver supports Modbus RTU and Ethernet-based
+(PROFINET, Ethernet/IP, and EtherCAT) versions.
+"""
+
+[metadata.collection]
+name = "collections/schunk"
+ros-name = "schunk_collection"
+
+[build]
+type = "ros"
+image = "v2.0.5-jazzy"
+
+[build.dependencies]
+"@aica/foss/control-libraries" = "v9.2.0"
+"@aica/foss/modulo" = "v5.2.2"
+"@aica/internal/libpkgcheck" = "v4.0.0"
+
+[build.packages.library]
+source = "schunk_gripper_library"
+
+[build.packages.interface]
+source = "schunk_gripper_interfaces"
+
+[build.packages.driver]
+source = "schunk_gripper_driver"

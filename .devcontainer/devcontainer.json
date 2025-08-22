@@ -1,0 +1,25 @@
+{
+    "name": "schunk",
+    "remoteUser": "ros2",
+    "initializeCommand": [
+        "docker",
+        "build",
+        "--file=aica-package.toml",
+        "--target=development",
+        "--tag=schunk:development",
+        "."
+    ],
+    "image": "schunk:development",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/home/ros2/.devcontainer,type=bind,consistency=cached",
+    "workspaceFolder": "/home/ros2/.devcontainer",
+    "mounts": [
+        "source=${localWorkspaceFolder},target=/home/ros2/ws/src,type=bind,consistency=cached"
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "charliermarsh.ruff"
+            ]
+        }
+    }
+}
