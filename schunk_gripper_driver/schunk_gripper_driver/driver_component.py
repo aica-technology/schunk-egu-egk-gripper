@@ -43,6 +43,10 @@ class Driver(LifecycleComponent):
         self.add_service("release", self._release_cb)
 
         self.create_service(ShowGripperSpecification, "~/show_specification", self._show_gripper_specification_cb)
+    
+    def __del__(self):
+        if self.gripper:
+            self.get_logger().warn(f"{self.gripper['driver'].disconnect()}")
 
     def add_gripper(self) -> Optional[Gripper]:
         host = self.get_parameter("host")
@@ -102,6 +106,7 @@ class Driver(LifecycleComponent):
         if self.gripper:
             self.gripper["driver"].disconnect()
             self.gripper["driver"] = GripperDriver()
+            self.gripper = None
         return True
 
     def on_step_callback(self):
@@ -172,8 +177,8 @@ class Driver(LifecycleComponent):
         except yaml.YAMLError as e:
             return {"success": False, "message": f"Failed to parse YAML: {e}"}
         try:
-            position = int(request["position"]) * 1e6
-            velocity = int(request["velocity"]) * 1e6
+            position = int(float(request["position"]) * 1e6)
+            velocity = int(float(request["velocity"]) * 1e6)
         except (KeyError, ValueError) as e:
             return {"success": False, "message": f"Failed to parse request: {e}"}
         use_gpe = bool(request.get("use_gpe", False))
@@ -201,3 +206,9 @@ class Driver(LifecycleComponent):
         use_gpe = bool(payload in ("true", "True"))
         success = self.gripper["driver"].release(use_gpe=use_gpe)
         return {"success": success, "message": self.gripper["driver"].get_status_diagnostics()}
+
+# TODO predicate
+# TODO on active only
+# TODO descriptions
+# TODO blocking behavior
+# TODO shutdown behavior
